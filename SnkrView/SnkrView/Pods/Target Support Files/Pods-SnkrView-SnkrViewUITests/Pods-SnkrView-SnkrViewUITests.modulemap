@@ -1,0 +1,6 @@
+framework module Pods_SnkrView_SnkrViewUITests {
+  umbrella header "Pods-SnkrView-SnkrViewUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

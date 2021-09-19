@@ -1,0 +1,6 @@
+framework module Pods_SnkrView {
+  umbrella header "Pods-SnkrView-umbrella.h"
+
+  export *
+  module * { export * }
+}
