@@ -1,0 +1,62 @@
+version: "1"
+image: runicos/base
+pipeline:
+  image:
+    capability: IMAGE
+    outputs:
+      - type: U8
+        dimensions:
+          - 1
+          - 224
+          - 224
+          - 3
+    args:
+      width: 224
+      height: 224
+      pixel_format: "@PixelFormat::RGB"
+  sneakers:
+    model: "./sneaker.tflite"
+    inputs:
+      - image
+    outputs:
+      - type: U8
+        dimensions:
+          - 1
+          - 12
+  most_confident:
+    proc-block: "hotg-ai/rune#proc_blocks/most_confident_indices"
+    inputs:
+      - sneakers
+    outputs:
+      - type: U32
+        dimensions:
+          - 3
+    args:
+      count: 3
+  label:
+    proc-block: "hotg-ai/rune#proc_blocks/label"
+    inputs:
+      - most_confident
+    outputs:
+      - type: UTF8
+        dimensions:
+          - 3
+    args:
+      labels:
+        - Jordan 1
+        - Jordan 2
+        - Jordan 3
+        - Jordan 4
+        - Jordan 5
+        - Jordan 6
+        - Jordan 7
+        - Jordan 8
+        - Jordan 9
+        - Jordan 10
+        - Jordan 11
+        - Jordan 12
+  serial:
+    out: SERIAL
+    inputs:
+      - label
+      
